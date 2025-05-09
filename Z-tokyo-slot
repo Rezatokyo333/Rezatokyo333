@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Z-Tokyo333 - Dummy</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #e6f2ff;
+      color: #333;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    input {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 200px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #3399ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .lobby {
+      display: none;
+      padding: 20px;
+    }
+    .providers {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 15px;
+    }
+    .provider {
+      background-color: white;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+    .game-area {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    .slot-machine {
+      width: 300px;
+      height: 150px;
+      background-color: #ccc;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .slot-reel {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      animation: spin 2s infinite linear;
+    }
+    .slot-item {
+      flex: 0 0 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      height: 100%;
+      background-color: #fff;
+    }
+    @keyframes spin {
+      0% { top: 0; }
+      100% { top: -300%; }
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="register">
+    <h2>Z-Tokyo333 - Registrasi Akun</h2>
+    <input type="text" id="newUser" placeholder="User ID Baru" />
+    <input type="password" id="newPass" placeholder="Password Baru" />
+    <button onclick="register()">Daftar</button>
+    <p>Sudah punya akun? <a href="#" onclick="showLogin()">Login disini</a></p>
+  </div>
+
+  <div class="container" id="login" style="display: none;">
+    <h2>Z-Tokyo333 - Login</h2>
+    <input type="text" id="user" placeholder="User ID" />
+    <input type="password" id="pass" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p>Belum punya akun? <a href="#" onclick="showRegister()">Daftar disini</a></p>
+  </div>
+
+  <div class="lobby" id="lobby">
+    <h2>Lobby - Z-Tokyo333</h2>
+    <div class="providers">
+      <div class="provider" onclick="startSlotGame()">Pragmatic Play</div>
+      <div class="provider" onclick="startSlotGame()">Lucky 365 (Mahjong)</div>
+      <div class="provider">Lionking</div>
+      <div class="provider">Speed Gaming</div>
+      <div class="provider">Jili</div>
+      <div class="provider">Micro Gaming</div>
+      <div class="provider">AFBM</div>
+      <div class="provider">Spacman</div>
+      <div class="provider">Joker</div>
+      <div class="provider">Ace Win</div>
+      <div class="provider">Play 8</div>
+      <div class="provider">Ekor</div>
+      <div class="provider">Live Casino PP</div>
+      <div class="provider">PG Soft</div>
+    </div>
+  </div>
+
+  <div class="game-area" id="gameArea" style="display: none;">
+    <h3>Slot Game - Z-Tokyo333</h3>
+    <div class="slot-machine">
+      <div class="slot-reel">
+        <div class="slot-item">🍒</div>
+        <div class="slot-item">🍇</div>
+        <div class="slot-item">🍎</div>
+        <div class="slot-item">🍒</div>
+        <div class="slot-item">🍇</div>
+      </div>
+    </div>
+    <button onclick="spinSlot()">Putar Slot</button>
+    <div class="result" id="result"></div>
+    <button onclick="playAgain()" style="display: none;" id="playAgainBtn">Main Lagi</button>
+  </div>
+
+  <script>
+    function showRegister() {
+      document.getElementById('register').style.display = 'flex';
+      document.getElementById('login').style.display = 'none';
+    }
+
+    function showLogin() {
+      document.getElementById('register').style.display = 'none';
+      document.getElementById('login').style.display = 'flex';
+    }
+
+    function register() {
+      const newUser = document.getElementById('newUser').value;
+      const newPass = document.getElementById('newPass').value;
+      if (newUser && newPass) {
+        alert('Akun berhasil dibuat! Silakan login.');
+        showLogin();
+      } else {
+        alert('Masukkan ID dan Password baru!');
+      }
+    }
+
+    function login() {
+      const user = document.getElementById('user').value;
+      const pass = document.getElementById('pass').value;
+      if (user && pass) {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('lobby').style.display = 'block';
+      } else {
+        alert('Masukkan ID dan Password!');
+      }
+    }
+
+    function startSlotGame() {
+      document.getElementById('lobby').style.display = 'none';
+      document.getElementById('gameArea').style.display = 'flex';
+    }
+
+    function spinSlot() {
+      const slotReel = document.querySelector('.slot-reel');
+      const resultDiv = document.getElementById('result');
+      slotReel.style.animation = 'none';
+      slotReel.offsetHeight; // trigger reflow
+      slotReel.style.animation = 'spin 2s infinite linear';
+
+      // Menentukan hasil kemenangan
+      setTimeout(function() {
+        const items = document.querySelectorAll('.slot-item');
+        const result = Math.floor(Math.random() * 10); // Hasil acak untuk menang atau kalah
+
+        if (result <= 3) {
+          resultDiv.innerHTML = 'Anda Menang! 🎉';
+        } else {
+          resultDiv.innerHTML = 'Anda Kalah! Coba Lagi.';
+        }
+
+        // Menampilkan tombol main lagi
+        document.getElementById('playAgainBtn').style.display = 'block';
+      }, 2500);
+    }
+
+    function playAgain() {
+      document.getElementById('result').innerHTML = '';
+      document.getElementById('playAgainBtn').style.display = 'none';
+      document.getElementById('gameArea').style.display = 'none';
+      document.getElementById('lobby').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
